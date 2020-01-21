@@ -15,6 +15,8 @@ package io.reactivex.rxjava3.parallel;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
+import java.util.function.Function;
+
 /**
  * Interface to compose ParallelFlowable.
  * <p>History: 2.0.8 - experimental
@@ -22,7 +24,8 @@ import io.reactivex.rxjava3.annotations.NonNull;
  * @param <Downstream> the downstream value type
  * @since 2.2
  */
-public interface ParallelTransformer<Upstream, Downstream> {
+@FunctionalInterface
+public interface ParallelTransformer<Upstream, Downstream> extends Function<ParallelFlowable<Upstream>, ParallelFlowable<Downstream>> {
     /**
      * Applies a function to the upstream ParallelFlowable and returns a ParallelFlowable with
      * optionally different element type.
@@ -30,5 +33,6 @@ public interface ParallelTransformer<Upstream, Downstream> {
      * @return the transformed ParallelFlowable instance
      */
     @NonNull
+    @Override
     ParallelFlowable<Downstream> apply(@NonNull ParallelFlowable<Upstream> upstream);
 }

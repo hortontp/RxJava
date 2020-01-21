@@ -15,13 +15,16 @@ package io.reactivex.rxjava3.core;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
+import java.util.function.Function;
+
 /**
  * Interface to compose Maybes.
  *
  * @param <Upstream> the upstream value type
  * @param <Downstream> the downstream value type
  */
-public interface MaybeTransformer<Upstream, Downstream> {
+@FunctionalInterface
+public interface MaybeTransformer<Upstream, Downstream> extends Function<Maybe<Upstream>, MaybeSource<Downstream>> {
     /**
      * Applies a function to the upstream Maybe and returns a MaybeSource with
      * optionally different element type.
@@ -29,5 +32,6 @@ public interface MaybeTransformer<Upstream, Downstream> {
      * @return the transformed MaybeSource instance
      */
     @NonNull
+    @Override
     MaybeSource<Downstream> apply(@NonNull Maybe<Upstream> upstream);
 }

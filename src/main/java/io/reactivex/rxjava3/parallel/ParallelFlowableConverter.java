@@ -15,6 +15,8 @@ package io.reactivex.rxjava3.parallel;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
+import java.util.function.Function;
+
 /**
  * Convenience interface and callback used by the {@link ParallelFlowable#to} operator to turn a ParallelFlowable into
  * another value fluently.
@@ -23,7 +25,8 @@ import io.reactivex.rxjava3.annotations.NonNull;
  * @param <R> the output type
  * @since 2.2
  */
-public interface ParallelFlowableConverter<T, R> {
+@FunctionalInterface
+public interface ParallelFlowableConverter<T, R> extends Function<ParallelFlowable<T>, R> {
     /**
      * Applies a function to the upstream ParallelFlowable and returns a converted value of type {@code R}.
      *
@@ -31,5 +34,6 @@ public interface ParallelFlowableConverter<T, R> {
      * @return the converted value
      */
     @NonNull
+    @Override
     R apply(@NonNull ParallelFlowable<T> upstream);
 }
