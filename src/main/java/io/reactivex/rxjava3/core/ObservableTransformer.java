@@ -15,13 +15,16 @@ package io.reactivex.rxjava3.core;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
+import java.util.function.Function;
+
 /**
  * Interface to compose Observables.
  *
  * @param <Upstream> the upstream value type
  * @param <Downstream> the downstream value type
  */
-public interface ObservableTransformer<Upstream, Downstream> {
+@FunctionalInterface
+public interface ObservableTransformer<Upstream, Downstream> extends Function<Observable<Upstream>, ObservableSource<Downstream>> {
     /**
      * Applies a function to the upstream Observable and returns an ObservableSource with
      * optionally different element type.
@@ -29,5 +32,6 @@ public interface ObservableTransformer<Upstream, Downstream> {
      * @return the transformed ObservableSource instance
      */
     @NonNull
+    @Override
     ObservableSource<Downstream> apply(@NonNull Observable<Upstream> upstream);
 }
